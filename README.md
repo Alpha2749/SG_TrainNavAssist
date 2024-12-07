@@ -44,7 +44,7 @@ Follow these steps to install the script using Tampermonkey:
 
 2. **Open the Script Installation Page**  
    Click on the following link to access the raw script:  
-   [Install SG Train Navigation Assistant](https://raw.githubusercontent.com/Alpha2749/SG_TrainNavAssist/main/sg-train-navigation-assistant.user.js)
+   [Install SG Train Navigation Assistant](https://github.com/Alpha2749/SG_TrainNavAssist/raw/refs/heads/main/sg-train-navigation-assistant.user.js)
    - Alternatively you can navigate to your Tampermonkey dashboard -> Utilities
      - Paste the above URL into the 'Import from URL' section.
      - Click **Install**
