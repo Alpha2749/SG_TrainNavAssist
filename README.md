@@ -35,9 +35,39 @@ tldr; I hope this addon helps people navigate trains, and (fingers crossed) work
 ## Installation
 To use this userscript, you will need a userscript extension installed in your browser. This has been developed and tested with TamperMonkey, however any userscript extension should work (i.e. ViolentMonkey, GreaseMonkey, etc).
 
-The installation steps below are made in/ for Tampermonkey, but the process should be similar for the others as well. If there are any installation issues, or there is a change required for one of the other userscript managers, please open an issue and let me know!
+Follow these steps to install the script using Tampermonkey:
 
-1. a
+1. **Install Tampermonkey**  
+   Tampermonkey is required to run the userscript. Install it from one of the following links based on your browser:
+   - [Chrome](https://chrome.google.com/webstore/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo)  
+   - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)  
+
+2. **Open the Script Installation Page**  
+   Click on the following link to access the raw script:  
+   [Install SG Train Navigation Assistant](https://raw.githubusercontent.com/Alpha2749/SG_TrainNavAssist/main/sg-train-navigation-assistant.user.js)
+   - Alternatively you can navigate to your Tampermonkey dashboard -> Utilities
+     - Paste the above URL into the 'Import from URL' section.
+     - Click **Install**
+
+4. **Install the Script**  
+   - After clicking the link, Tampermonkey will automatically open the script installation screen.
+   - Review the script details.
+   - Click the **Install** button to add the script.
+
+6. **Updating the Script**  
+   Tampermonkey should automatically check for updates periodically (I think I've set it up correctly). To manually check:
+   - Open Tampermonkey’s Dashboard.
+   - Locate the **SG Train Navigation Assistant** script.
+   - Click the **Update** button if an update is available.
+   - If this doesn't work, check back on this repo to see if there has been an update.
+
+---
+
+### Troubleshooting
+- If the script doesn’t work, ensure:
+  - Tampermonkey is enabled in your browser.
+  - The script is active and running when on a steamgifts/giveaway ([such as this](https://www.steamgifts.com/giveaway/VggFl/starfield)) domain.
+- Check the console for errors (Press `F12` → Console tab).
 
 
 ## Usage
