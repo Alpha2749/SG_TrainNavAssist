@@ -8,7 +8,10 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=steamgifts.com
 // @grant        none
 // @run-at       document-start
+// @updateURL https://github.com/Alpha2749/SG_TrainNavAssist/raw/refs/heads/main/sg-train-navigation-assistant.user.js
+// @downloadURL https://github.com/Alpha2749/SG_TrainNavAssist/raw/refs/heads/main/sg-train-navigation-assistant.user.js
 // ==/UserScript==
+
 
 (function () {
     'use strict';
