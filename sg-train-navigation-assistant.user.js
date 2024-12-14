@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2024-12-07
+// @version      2024-12-14
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
@@ -23,6 +23,12 @@
     const lastRegex = new RegExp(lastKeywords.join('|'), 'i');
 
     document.addEventListener('keydown', function (event) {
+
+        const isInputField = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
+        if (isInputField) {
+            return;
+        }
+
         const screenshotsOpen = !document.querySelector('.lightbox.hide');
         if (screenshotsOpen) {
             handleScreenshots(event);
