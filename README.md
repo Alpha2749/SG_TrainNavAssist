@@ -78,4 +78,4 @@ To use this userscript, simply use your arrow keys when in a train, the current 
 - Right Arrow (→) - Go to the next train cart
 - Up Arrow (↑) - Open/ Close game screenshots
 
-Note: When writing a comment or changing the description (i.e. when your cursor is active inside a textbox, the shortcut keys will not work).
+Note: When writing a comment or changing the description (i.e. when your cursor is active inside a textbox) the shortcut keys will not work.
