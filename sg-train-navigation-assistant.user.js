@@ -110,7 +110,7 @@
             z-index: 1000;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s, transform 0.5s;
+            transition: opacity 0.2s, transform 0.3s;
         `;
         popup.textContent = message;
         document.body.appendChild(popup);
