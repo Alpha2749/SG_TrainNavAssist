@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2024-12-14
+// @version      2024-12-15
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
@@ -18,7 +18,6 @@
 
     const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing'];
     const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling'];
-    const blacklist = ['station', 'Central Station'];
     const nextRegex = new RegExp(nextKeywords.join('|'), 'i');
     const lastRegex = new RegExp(lastKeywords.join('|'), 'i');
 
@@ -51,11 +50,15 @@
     }
 
     function findLink(direction, regex) {
-        return Array.from(document.querySelector('.page__description')?.querySelectorAll('a') || []).find(link => {
-            const text = link.textContent.trim();
-            return regex.test(text) && !blacklist.some(word => text.includes(word));
-        })?.href;
-    }
+    return Array.from(document.querySelector('.page__description')?.querySelectorAll('a') || []).find(link => {
+        const text = link.textContent.trim();
+        const url = link.href;
+        const isValidURL = url.includes('/giveaway/') && !url.includes('/discussion/') && !url.includes('/user/');
+
+        return isValidURL && regex.test(text);
+    })?.href;
+}
+
 
     function extractLinks(direction) {
         const paragraphs = document.querySelector('.page__description')?.getElementsByTagName('p') || [];
