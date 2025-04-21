@@ -1,23 +1,23 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2024-12-15
+// @version      2025-04-21
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=steamgifts.com
 // @grant        none
 // @run-at       document-start
-// @updateURL https://github.com/Alpha2749/SG_TrainNavAssist/raw/refs/heads/main/sg-train-navigation-assistant.user.js
-// @downloadURL https://github.com/Alpha2749/SG_TrainNavAssist/raw/refs/heads/main/sg-train-navigation-assistant.user.js
+// @downloadURL https://update.greasyfork.org/scripts/533401/SG%20Train%20Navigation%20Assistant.user.js
+// @updateURL https://update.greasyfork.org/scripts/533401/SG%20Train%20Navigation%20Assistant.meta.js
 // ==/UserScript==
 
 
 (function () {
     'use strict';
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing'];
-    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling'];
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬' ];
+    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫'];
     const nextRegex = new RegExp(nextKeywords.join('|'), 'i');
     const lastRegex = new RegExp(lastKeywords.join('|'), 'i');
 
