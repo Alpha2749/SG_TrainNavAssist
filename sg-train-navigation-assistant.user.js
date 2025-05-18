@@ -16,8 +16,8 @@
 (function () {
     'use strict';
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo'];
-    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente'];
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶'];
+    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀'];
     const nextRegex = new RegExp(nextKeywords.join('|'), 'i');
     const lastRegex = new RegExp(lastKeywords.join('|'), 'i');
 
