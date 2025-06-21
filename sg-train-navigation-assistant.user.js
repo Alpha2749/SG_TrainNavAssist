@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2025-05-18
+// @version      2025-06-21
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
@@ -16,17 +16,12 @@
 (function () {
     'use strict';
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶'];
-    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀'];
-    const nextRegex = new RegExp(nextKeywords.join('|'), 'i');
-    const lastRegex = new RegExp(lastKeywords.join('|'), 'i');
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶', 'nekst'];
+    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior'];
 
     document.addEventListener('keydown', function (event) {
-
         const isInputField = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
-        if (isInputField) {
-            return;
-        }
+        if (isInputField) return;
 
         const screenshotsOpen = !document.querySelector('.lightbox.hide');
         if (screenshotsOpen) {
@@ -34,13 +29,13 @@
             return;
         }
 
-        if (event.key === 'ArrowRight') handleNavigation('next', nextRegex);
-        if (event.key === 'ArrowLeft') handleNavigation('previous', lastRegex);
+        if (event.key === 'ArrowRight') handleNavigation('next');
+        if (event.key === 'ArrowLeft') handleNavigation('previous');
         if (event.key === 'ArrowUp') openScreenshots();
     });
 
-    function handleNavigation(direction, regex) {
-        const link = findLink(direction, regex) || extractLinks(direction);
+    function handleNavigation(direction) {
+        const link = extractLinks(direction) || findLabelledLink(direction) || findLink(direction);
         if (link) {
             showPopup(`Moving ${direction === 'next' ? 'Onward' : 'Backward'}!`);
             window.location.href = link;
@@ -49,16 +44,34 @@
         }
     }
 
-    function findLink(direction, regex) {
-    return Array.from(document.querySelector('.page__description')?.querySelectorAll('a') || []).find(link => {
-        const text = link.textContent.trim();
-        const url = link.href;
-        const isValidURL = url.includes('/giveaway/') && !url.includes('/discussion/') && !url.includes('/user/');
+    function findLink(direction) {
+        var regex = new RegExp((direction === 'next' ? nextKeywords : lastKeywords).join('|'), 'i');
+        return Array.from(document.querySelector('.page__description')?.querySelectorAll('a') || []).find(link => {
+            const text = link.textContent.trim();
+            const url = link.href;
+            const isValidURL = url.includes('/giveaway/') && !url.includes('/discussion/') && !url.includes('/user/');
+            return isValidURL && regex.test(text);
+        })?.href;
+    }
 
-        return isValidURL && regex.test(text);
-    })?.href;
-}
+    function findLabelledLink(direction) {
+        var regex = new RegExp(`^\\s*(?:${(direction === 'next' ? nextKeywords : lastKeywords).join('|')})(?=\\s*:?)`, 'i');
+        const container = document.querySelector('.page__description');
+        if (!container) return null;
 
+        const lines = container.innerText.split('\n');
+        for (const line of lines) {
+            if (regex.test(line)) {
+                const match = line.match(/(https?:\/\/[^ \n]+)/);
+                if (match) {
+                    const url = match[1];
+                    const isValidURL = url.includes('/giveaway/') && !url.includes('/discussion/') && !url.includes('/user/');
+                    if (isValidURL) return url;
+                }
+            }
+        }
+        return null;
+    }
 
     function extractLinks(direction) {
         const paragraphs = document.querySelector('.page__description')?.querySelectorAll('p, h1, h2') || [];
