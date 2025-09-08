@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2025-06-21
+// @version      2025-09-08
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
@@ -38,7 +38,7 @@
         const link = extractLinks(direction) || findLabelledLink(direction) || findLink(direction);
         if (link) {
             showPopup(`Moving ${direction === 'next' ? 'Onward' : 'Backward'}!`);
-            window.location.href = link;
+            //window.location.href = link;
         } else {
             showPopup(`Unable to find ${direction} cart. Are you sure you're in a train?`);
         }
@@ -76,21 +76,34 @@
     function extractLinks(direction) {
         const paragraphs = document.querySelector('.page__description')?.querySelectorAll('p, h1, h2') || [];
         const numbers = Array.from(paragraphs)
-            .flatMap(paragraph => [...paragraph.innerText.matchAll(/\d+/g)].map(match => parseInt(match[0])))
-            .filter(Boolean);
+        .flatMap(paragraph => [...paragraph.innerText.matchAll(/\d+/g)].map(match => parseInt(match)))
+        .filter(Boolean);
 
         const uniqueNumbers = Array.from(new Set(numbers)).sort((a, b) => a - b);
+        if (uniqueNumbers.length === 0) return null;
 
-        for (let i = 0; i < uniqueNumbers.length - 2; i++) {
-            if (uniqueNumbers[i + 1] === uniqueNumbers[i] + 1 && uniqueNumbers[i + 2] === uniqueNumbers[i] + 2) {
-                const targetNum = direction === 'previous' ? uniqueNumbers[i] : uniqueNumbers[i + 2];
-                const link = Array.from(document.querySelector('.page__description')?.querySelectorAll('a') || []).find(
-                    a => a.textContent.trim() === targetNum.toString()
-                );
-                if (link) return link.href;
+        let run = null;
+        for (let i = 0; i < uniqueNumbers.length; i++) {
+            if (i + 1 < uniqueNumbers.length &&
+                uniqueNumbers[i + 1] - uniqueNumbers[i] === 2) {
+                run = [uniqueNumbers[i], uniqueNumbers[i + 1]];
+                break;
+            }
+
+            if (i + 2 < uniqueNumbers.length &&
+                uniqueNumbers[i + 1] - uniqueNumbers[i] === 1 &&
+                uniqueNumbers[i + 2] - uniqueNumbers[i + 1] === 1) {
+                run = [uniqueNumbers[i], uniqueNumbers[i + 1], uniqueNumbers[i + 2]];
+                break;
             }
         }
-        return null;
+        if (!run) return null;
+
+        const targetNum = direction === 'previous' ? run[0] : run[run.length - 1];
+        const link = Array.from(document.querySelectorAll('a')).find(
+            a => a.textContent.trim() === targetNum.toString()
+        );
+        return link ? link.href : null;
     }
 
     function handleScreenshots(event) {
