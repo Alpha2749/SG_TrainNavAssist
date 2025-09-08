@@ -38,7 +38,7 @@
         const link = extractLinks(direction) || findLabelledLink(direction) || findLink(direction);
         if (link) {
             showPopup(`Moving ${direction === 'next' ? 'Onward' : 'Backward'}!`);
-            //window.location.href = link;
+            window.location.href = link;
         } else {
             showPopup(`Unable to find ${direction} cart. Are you sure you're in a train?`);
         }
