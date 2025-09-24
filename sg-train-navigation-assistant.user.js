@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2025-09-09
+// @version      2025-09-24
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
