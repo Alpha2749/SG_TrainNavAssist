@@ -35,8 +35,8 @@
     });
 
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶', 'nekst'];
-    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior'];
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶', 'nekst', '⏭️'];
+    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior', '⏮️'];
 
     document.addEventListener("keydown", function (event) {
         const isInputField = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName);
