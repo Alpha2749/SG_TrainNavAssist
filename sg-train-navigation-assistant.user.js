@@ -36,7 +36,7 @@
     });
 
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', 'N E X T', 'ahead', 'future', 'climbing', '↬', 'avanti', 'prossimo', '▶', 'nekst', 'yes', 'go', '➡️', '⏩', '⏭️', '🌜', '👉'];
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', 'N E X T', 'ahead', 'future', 'climbing', '↬', 'avanti', 'prossimo', '▶', 'nekst', 'yes', 'go', '➡️', '⏩', '⏭️', '🌜', '👉', 'Forth'];
     const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', 'B A C K', 'retreat', 'past', 'falling', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior', 'no', 'og', '⬅️', '⏪', '⏮️', '🌛', '👈'];
 
     document.addEventListener("keydown", function (event) {
