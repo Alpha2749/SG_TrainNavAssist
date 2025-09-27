@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SG Train Navigation Assistant
 // @namespace    http://tampermonkey.net/
-// @version      2025-09-24
+// @version      2025-09-27
 // @description  Adds some QoL shortcuts for train navigation on SG!
 // @author       Alpha2749 | SG /user/Alpha2749
 // @match        https://www.steamgifts.com/giveaway/*
@@ -27,6 +27,7 @@
             next: "ArrowRight",
             previous: "ArrowLeft",
             screenshots: "ArrowUp",
+            trailerToggle: "Control",
         }
     };
     let config = loadConfig();
@@ -35,8 +36,8 @@
     });
 
 
-    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', '⏩', '👉', 'N E X T', 'ahead', 'future', 'climbing', '🌜', '↬', 'avanti', 'prossimo', '▶', 'nekst', '⏭️'];
-    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', '⏪', '👈', 'B A C K', 'retreat', 'past', 'falling', '🌛', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior', '⏮️'];
+    const nextKeywords = ['next', 'forward', 'on', '>', 'cho', '→', 'N E X T', 'ahead', 'future', 'climbing', '↬', 'avanti', 'prossimo', '▶', 'nekst', 'yes', 'go', '➡️', '⏩', '⏭️', '🌜', '👉'];
+    const lastKeywords = ['prev', 'back', 'last', '<', 'och', '←', 'B A C K', 'retreat', 'past', 'falling', '↫', 'indietro', 'precedente', '◀', 'previous', 'perv', 'prior', 'no', 'og', '⬅️', '⏪', '⏮️', '🌛', '👈'];
 
     document.addEventListener("keydown", function (event) {
         const isInputField = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName);
@@ -56,7 +57,7 @@
         }
     });
 
-    function handleNavigation(direction) {
+    async function handleNavigation(direction) {
         const link = extractLinks(direction) || findLabelledLink(direction) || findLink(direction);
         if (link) {
             showPopup(`Moving ${direction === 'next' ? 'Onward' : 'Backward'}!`);
@@ -132,6 +133,20 @@
         if (event.key === config.keyBindings.screenshots) {
             const closeBtn = document.querySelector('.lightbox-header-icon--close');
             closeBtn?.click();
+            return;
+        }
+
+        if (event.key === config.keyBindings.trailerToggle) {
+            const imageBtn = document.querySelector('.lightbox-header-icon.fa-camera');
+            const videoBtn = document.querySelector('.lightbox-header-icon.fa-video-camera');
+            if (!imageBtn || !videoBtn) return;
+
+            const isImageSelected = imageBtn.classList.contains('lightbox-header-icon--selected');
+            if (isImageSelected) {
+                videoBtn.click();
+            } else {
+                imageBtn.click();
+            }
         }
     }
 
@@ -144,7 +159,6 @@
         });
         screenshotBtn?.click();
     }
-
 
     function showPopup(message) {
         const popup = document.createElement('div');
@@ -238,12 +252,16 @@
         </label>
 
         <label style="display: block; margin-bottom: 16px;">
-            <strong>Screenshots Key:</strong><br>
+            <strong>Media Keys:</strong><br>
+            Open/ Close Screenshots:<br>
             <label style="display: flex; width: 100%;">
                 <input type="text" id="cfg-scr" value="${config.keyBindings.screenshots}" readonly
                     style="padding: 6px 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; margin-right: 8px;">
                 <input type="checkbox" id="cfg-screenshots" style="width: 48px;" ${config.allowOpenScreenshots ? "checked" : ""}>
             </label>
+            Toggle Images/Videos:<br>
+            <input type="text" id="cfg-tra" value="${config.keyBindings.trailerToggle}" readonly
+                    style="padding: 6px 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; margin-right: 8px;">
         </label>
 
         <div style="display:flex;gap:8px;justify-content:flex-end;">
@@ -284,6 +302,7 @@
         bindKeyCapture(panel.querySelector("#cfg-next"), "next");
         bindKeyCapture(panel.querySelector("#cfg-prev"), "previous");
         bindKeyCapture(panel.querySelector("#cfg-scr"), "screenshots");
+        bindKeyCapture(panel.querySelector("#cfg-tra"), "trailerToggle");
 
         panel.querySelector("#cfg-close").onclick = closePopup;
         panel.querySelector("#cfg-reset").onclick = () => {
